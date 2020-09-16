@@ -3,9 +3,23 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   @if (ViewBag.Description != null)
+   {
+      <meta name="description" content="@ViewBag.Description" />
+   }
+
+
    <title>Document</title>
+   <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
 </head>
 <body>
+   @await Html.PartialAsync("HeaderPartial")
 
+
+   <div>
+      @RenderBody()
+   </div>
+   
+   @await Html.PartialAsync("FooterPartial") 
 </body>
 </html>

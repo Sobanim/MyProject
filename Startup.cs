@@ -16,6 +16,10 @@ namespace MyProject
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            //add support for controllers and views
+            services.AddControllersWithViews()
+                //set compatibility with asp.net core 3
+                .SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0).AddSessionStateTempDataProvider();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -28,12 +32,15 @@ namespace MyProject
 
             app.UseRouting();
 
+            //connect for static files to application (css, js ...)
+            app.UseStaticFiles();
+
+            //registering routings
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
                 {
-                    await context.Response.WriteAsync("Hello World!");
-                });
+                    endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
+                } 
             });
         }
     }
